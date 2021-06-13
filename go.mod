@@ -1,3 +1,3 @@
-module github.com/gmlalfjr/golang/go_CommonResponse
+module github.com/gmlalfjr/go_CommonResponse
 
 go 1.16
