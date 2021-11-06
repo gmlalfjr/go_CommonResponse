@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-func SuccessResponse(data *SuccessWrapper, status int) (events.APIGatewayProxyResponse, error) {
+func SuccessResponse(data *SuccessWrapper) (events.APIGatewayProxyResponse, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return FailResponse(&ErrorWrapper{
@@ -17,7 +17,7 @@ func SuccessResponse(data *SuccessWrapper, status int) (events.APIGatewayProxyRe
 	}
 
 	return events.APIGatewayProxyResponse{
-		StatusCode:      status | 200,
+		StatusCode:      data.StatusCode,
 		IsBase64Encoded: false,
 		Body:            string(body),
 		Headers: map[string]string{
