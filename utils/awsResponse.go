@@ -6,10 +6,14 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-func SuccessResponse(data interface{}, status int) (events.APIGatewayProxyResponse, error) {
+func SuccessResponse(data SuccessWrapper, status int) (events.APIGatewayProxyResponse, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
-		return FailResponse(err, 400)
+		return FailResponse(ErrorWrapper{
+			Error:      err.Error(),
+			Message:    "Gor Error When Marshaling",
+			StatusCode: 400,
+		})
 	}
 
 	return events.APIGatewayProxyResponse{
@@ -22,11 +26,11 @@ func SuccessResponse(data interface{}, status int) (events.APIGatewayProxyRespon
 	}, nil
 }
 
-func FailResponse(data interface{}, status int) (events.APIGatewayProxyResponse, error) {
+func FailResponse(data ErrorWrapper) (events.APIGatewayProxyResponse, error) {
 	body, _ := json.Marshal(data)
 
 	return events.APIGatewayProxyResponse{
 		Body:       string(body),
-		StatusCode: status,
+		StatusCode: data.StatusCode,
 	}, nil
 }
