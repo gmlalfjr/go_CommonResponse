@@ -11,3 +11,10 @@ type ErrorWrapper struct {
 	Message    string      `json:"message"`
 	StatusCode int         `json:"statusCode"`
 }
+
+type SuccessPaginationWrapper struct {
+	Message          string      `json:"message"`
+	Data             interface{} `json:"data"`
+	LastEvaluatedKey interface{} `json:"lastEvaluatedKey"`
+	StatusCode       int         `json:"statusCode"`
+}
